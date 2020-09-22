@@ -1,0 +1,61 @@
+﻿@model _19Jul2020_1.Models.Leave
+@{
+    ViewBag.Title = "Apply";
+}
+
+<h2>Apply</h2>
+@*<div class='container' style='margin-top: 100px;'>
+    <input type='text' class="form-control" data-date-language="pt" id='datepicker' style='width: 300px;'>
+</div>*@
+
+<!-- Script -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.datepicker').datepicker({
+            "format": "mm-dd-yy",
+            "startDate": "-5d",
+            
+            "keyboardNavigation": false
+        });
+    });
+</script>
+
+<form action="/Leave/Apply" method="post">
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <label>FromDate</label>
+                <input name="FromDate" type="text" class="form-control datepicker" data-date-language="pt"/>
+
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>ToDate</label>
+                <input name="ToDate" type="text" class="form-control  datepicker" data-date-language="pt" />
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <label>Reason</label>
+                <input type="text" name="Reason" class="form-control" />
+
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Apply</button>
+            </div>
+        </div>
+    </div>
+</form>

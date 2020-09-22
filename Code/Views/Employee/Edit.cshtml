@@ -1,0 +1,58 @@
+﻿@model _19Jul2020_1.Models.Employee
+@{
+    ViewBag.Title = "Index";
+    
+}
+<form action="/Employee/Edit" method="post">
+   
+    <div class="row">
+        <div class="col-md-6">
+            @Html.HiddenFor(x=>x.Id)
+            
+            <div class="form-group">
+                <label>Name</label>
+                @Html.TextBoxFor(x=>x.Name,new {@class= "form-control"})
+
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Salary</label>
+                @Html.TextBoxFor(x => x.Salary, new { @class = "form-control" })
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <label>Email</label>
+                @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Password</label>
+                @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+
+            </div>
+            <div class="form-group">
+                <label>IsAdmin</label>
+                @Html.CheckBoxFor(x => x.IsAdmin)
+
+          
+
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</form>

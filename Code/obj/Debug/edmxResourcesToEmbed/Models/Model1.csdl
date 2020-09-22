@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EntityFrameworkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Salary" Type="Int32" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Attendances" Relationship="EntityFrameworkModel.FK_Attendance_Employee" FromRole="Employee" ToRole="Attendance" />
+    <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Leaves" Relationship="EntityFrameworkModel.FK_Leave_Employee" FromRole="Employee" ToRole="Leave" />
+  </EntityType>
+  <EntityContainer Name="EntityFrameworkEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Employees" EntityType="Self.Employee" />
+    <EntitySet Name="Attendances" EntityType="EntityFrameworkModel.Attendance" />
+    <AssociationSet Name="FK_Attendance_Employee" Association="EntityFrameworkModel.FK_Attendance_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Attendance" EntitySet="Attendances" />
+    </AssociationSet>
+    <EntitySet Name="Leaves" EntityType="EntityFrameworkModel.Leave" />
+    <AssociationSet Name="FK_Leave_Employee" Association="EntityFrameworkModel.FK_Leave_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Leave" EntitySet="Leaves" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Attendance">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EmplyeeId" Type="Int32" Nullable="false" />
+    <Property Name="PunchIn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="PunchOut" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Employee" Relationship="EntityFrameworkModel.FK_Attendance_Employee" FromRole="Attendance" ToRole="Employee" />
+  </EntityType>
+  <Association Name="FK_Attendance_Employee">
+    <End Type="EntityFrameworkModel.Employee" Role="Employee" Multiplicity="1" />
+    <End Type="EntityFrameworkModel.Attendance" Role="Attendance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Attendance">
+        <PropertyRef Name="EmplyeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Leave">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="FromDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ToDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Reason" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="Aproved" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CreateOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+    <Property Name="ModifiedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Employee" Relationship="EntityFrameworkModel.FK_Leave_Employee" FromRole="Leave" ToRole="Employee" />
+  </EntityType>
+  <Association Name="FK_Leave_Employee">
+    <End Type="EntityFrameworkModel.Employee" Role="Employee" Multiplicity="1" />
+    <End Type="EntityFrameworkModel.Leave" Role="Leave" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Leave">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
